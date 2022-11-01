@@ -1,7 +1,8 @@
 const express = require('express');
 const servidor = express();
 const colors = require('colors');
-const dotenv = require('dotenv').config();
+const config = require('./app/config');
+
 //const { append } = require('express/lib/response');
 const os = require('os');
 
@@ -19,8 +20,18 @@ servidor.get('/info', (req, res) => {
 })
 
 servidor.listen(port, ()=> {
-    console.log(`listening at https://localhost:${port}`.bgGreen.bold);
+    
+    switch (process.env.ENVIROMENT){
+        case 'development':
+            console.log(`listening at https://localhost:${port}`.bgGreen.bold);
+            break
+        case 'production':
+            console.log(`listening at https://localhost:${port}`.bgYellow.bold);
+            break
+        case 'qa':
+            console.log(`listening at https://localhost:${port}`.bgRed.bold);
+            break
+    }
 });
 
-//npm i express
-//npm i nodemon -D
+//npm i
